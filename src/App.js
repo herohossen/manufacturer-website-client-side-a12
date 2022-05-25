@@ -10,17 +10,23 @@ import MyOrders from "./Pages/Dashboard/MyOrders";
 import MyProfile from "./Pages/Dashboard/MyProfile";
 import AddAReview from "./Pages/Dashboard/AddAReview";
 import SignUp from "./Pages/Login/SignUp";
+import Purchase from "./Pages/Purchase/Purchase";
 function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/home" element={<Home />} />
         <Route path="login" element={<Login />} />
-        {/* <Route path="dashboard" element={<RequireAuth><Dashboard /></RequireAuth>} />
-         */}
-        {/* <Route path="review" element={<MyOrders></MyOrders>}></Route> */}
-        {/* </Route> */}
+        <Route
+          path="purchase/:toolId"
+          element={
+            // <RequireAuth>
+            <Purchase />
+            // </RequireAuth>
+          }
+        />
 
         <Route
           path="dashboard"
