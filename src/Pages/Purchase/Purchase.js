@@ -5,6 +5,7 @@ import auth from "../../firebase.init";
 import Loading from "../Shared/Loading";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { toast } from "react-toastify";
+import { logDOM } from "@testing-library/react";
 
 const Purchase = () => {
   const [user] = useAuthState(auth);
@@ -23,35 +24,10 @@ const Purchase = () => {
   useEffect(() => {
     setUserOrderQuantity(tool);
   }, [tool]);
-  // useEffect(() => {
-  //   fetch(`http://localhost:5000/tools/${toolId}`)
-  //     .then((res) => res.json())
-  //     .then((data) => {
-  //       console.log(data);
-  //       setTool(data);
-  //       setUserOrderQuantity(data);
-  //     });
-  // }, [toolId]);
 
   if (isLoading) {
     return <Loading></Loading>;
   }
-
-  // const [user, setUser] = useState({
-  //     name: 'Akbar The Great',
-  //     email: 'akbar@momo.taj',
-  //     address: 'Tajmohol Road Md.pur',
-  //     phone: '01711111111'
-  // });
-
-  // const handleAddressChange = event =>{
-  //     console.log(event.target.value);
-  //     const {address, ...rest} = user;
-  //     const newAddress = event.target.value;
-  //     const newUser = {address: newAddress, ...rest};
-  //     console.log(newUser);
-  //     setUser(newUser);
-  // }
 
   const handleChangeQuantity = (e) => {
     setUserOrderQuantity(e.target.value);
@@ -66,16 +42,6 @@ const Purchase = () => {
     const userQuantity = userOrderQuantity?.quantity;
     const toolQuantity = tool?.quantity;
     const toolStock = tool?.stock;
-    if (e.target.address.value === "") {
-      toast.error("Please provide your Address");
-      return false;
-    } else if (e.target.quantity.value === "") {
-      toast.error("Please provide your Minimum Order Quantity");
-      return false;
-    } else if (e.target.phone.value === "") {
-      toast.error("Please provide your Phone number");
-      return false;
-    }
 
     // order
     const email = user?.email;
@@ -87,7 +53,9 @@ const Purchase = () => {
     const price = userOrderQuantity?.price;
     const stock = userOrderQuantity?.stock;
     const img = userOrderQuantity?.img;
-    const quantity = parseInt(e.target.quantity.value);
+
+    const payment = false;
+    const orderQuantity = parseInt(e.target.quantity.value);
     const order = {
       email,
       displayName,
@@ -98,11 +66,12 @@ const Purchase = () => {
       price,
       stock,
       img,
-      quantity,
+      payment,
+      orderQuantity,
     };
     console.log(order);
-    fetch("http://localhost:8888/tools", {
-      method: "POST", // or 'PUT'
+    fetch("http://localhost:8888/order", {
+      method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
@@ -133,42 +102,53 @@ const Purchase = () => {
       return true;
     }
   };
-
   return (
     <div>
       <div className="hero min-h-screen bg-base-200">
         <div className="hero-content grid grid-cols-1 lg:grid-cols-2 gap-5 p-5 justify-items-center">
           <div className="text-center lg:text-left">
-            <h1 className="text-4xl font-bold">User Information</h1>
-            <p className="py-3 text-xl font-semibold">
+            <h1 className="text-4xl font-bold text-success">
+              User Information
+            </h1>
+            <p className="py-1 text-xl font-semibold">
               User Name: {user?.displayName}
             </p>
-            <p className="py-1 text-xl font-semibold">
+            <p className="py-1 pb-5 text-xl font-semibold">
               User Email: {user?.email}
             </p>
 
-            <h1 className="text-4xl font-bold">Product Details</h1>
-            <p className="py-1 text-xl font-semibold">
-              Price Per Unit: $<b>{userOrderQuantity?.price}</b>
-            </p>
-            <p className="py-1 text-xl">
-              Description: {userOrderQuantity?.description?.slice(0, 150)}...
-            </p>
-            <p className="py-1 text-xl font-semibold">
-              Ratings: ({userOrderQuantity?.ratings})
-            </p>
-            <p className="py-1 text-xl font-semibold">
-              Available Quantity: <b>{userOrderQuantity?.stock}</b> Unit
-            </p>
-            <p className="py-1 text-xl font-semibold">
-              Minimum Order Quantity: <b>{tool?.quantity}</b> Unit
-            </p>
+            <div class="collapse">
+              <input type="checkbox" />
+              <div class="collapse-title ">
+                <h1 className="text-4xl font-bold text-success">
+                  Product Details{" "}
+                  <span className="text-sm text-neutral">(Show/Hied)</span>
+                </h1>
+              </div>
+              <div class="collapse-content">
+                <p className="py-1 text-xl font-semibold">
+                  Price Per Unit: $<b>{userOrderQuantity?.price}</b>
+                </p>
+                <p className="py-1 text-xl">
+                  Description: {userOrderQuantity?.description}
+                </p>
+                <p className="py-1 text-xl font-semibold">
+                  Ratings: ({userOrderQuantity?.ratings})
+                </p>
+                <p className="py-1 text-xl font-semibold">
+                  Available Quantity: <b>{userOrderQuantity?.stock}</b> Unit
+                </p>
+                <p className="py-1 text-xl font-semibold">
+                  Minimum Order Quantity: <b>{tool?.quantity}</b> Unit
+                </p>
+              </div>
+            </div>
           </div>
           <div className="card flex-shrink-0 w-full max-w-sm shadow-2xl bg-base-100">
             <div className="card-body">
               <form onSubmit={formSubmit} className="form-control">
                 <label className="label">
-                  <span className="label-text">Minimum Order Quantity</span>
+                  <span className="label-text">Order Quantity</span>
                 </label>
                 <input
                   type="number"
@@ -176,13 +156,13 @@ const Purchase = () => {
                   onChange={handleChangeQuantity}
                   value={userOrderQuantity?.quantity}
                   className="input input-bordered mb-3"
+                  required
                 />
                 <label className="label">
                   <span className="label-text">Available Quantity</span>
                 </label>
                 <input
                   type="text"
-                  // onChange={handleChangeAvailableQuantity}
                   name="stock"
                   value={userOrderQuantity?.stock}
                   className="input input-bordered mb-3"
@@ -197,6 +177,7 @@ const Purchase = () => {
                   name="address"
                   placeholder="Address"
                   className="input input-bordered mb-3"
+                  required
                 />
 
                 <label className="label">
@@ -207,14 +188,16 @@ const Purchase = () => {
                   name="phone"
                   placeholder="Phone"
                   className="input input-bordered mb-3"
+                  required
                 />
                 <input
                   id="placeOrder"
                   disabled={
                     userOrderQuantity?.quantity < tool?.quantity ||
-                    userOrderQuantity?.quantity > tool?.stock
+                    userOrderQuantity?.quantity > tool?.stock ||
+                    isNaN(userOrderQuantity?.quantity)
                   }
-                  className="btn btn-primary"
+                  className="btn btn-success"
                   type="submit"
                   value="Place Order"
                 />

@@ -91,6 +91,12 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal p-0">{menuItems}</ul>
       </div>
+      {/* <label
+            for="dashboard-sidebar"
+            className="btn btn-primary drawer-button lg:hidden"
+          >
+          </label> */}
+
       <div className="navbar-end">
         <label
           tabIndex="1"
