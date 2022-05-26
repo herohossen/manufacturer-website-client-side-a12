@@ -13,6 +13,7 @@ import SignUp from "./Pages/Login/SignUp";
 import Purchase from "./Pages/Purchase/Purchase";
 import AllOrders from "./Pages/Dashboard/AllOrders";
 import Users from "./Pages/Dashboard/Users";
+import RequireAdmin from "./Pages/Login/RequireAdmin";
 function App() {
   return (
     <div className="App">
@@ -43,7 +44,8 @@ function App() {
           <Route path="addareview" element={<AddAReview />} />
 
           <Route path="allorders" element={<AllOrders />} />
-          <Route path="users" element={<Users />} />
+          {/* Admin Panel */}
+          <Route path="users" element={<RequireAdmin><Users /></RequireAdmin>} />
         </Route>
         <Route path="signup" element={<SignUp />} />
       </Routes>

@@ -10,7 +10,7 @@ const UserRow = ({ user, refetch }) => {
         authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     })
-      .then((res) => {
+      .then((res) => { 
         if (res.status === 403) {
           toast.error("Failed to Make an admin");
         }
@@ -25,7 +25,7 @@ const UserRow = ({ user, refetch }) => {
   };
 
   return (
-    <div>
+ 
       <tr>
         <td>{email}</td>
         <td>
@@ -39,7 +39,7 @@ const UserRow = ({ user, refetch }) => {
           <button class="btn btn-xs">Remove User</button>
         </td>
       </tr>
-    </div>
+
   );
 };
 
