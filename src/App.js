@@ -11,6 +11,8 @@ import MyProfile from "./Pages/Dashboard/MyProfile";
 import AddAReview from "./Pages/Dashboard/AddAReview";
 import SignUp from "./Pages/Login/SignUp";
 import Purchase from "./Pages/Purchase/Purchase";
+import AllOrders from "./Pages/Dashboard/AllOrders";
+import Users from "./Pages/Dashboard/Users";
 function App() {
   return (
     <div className="App">
@@ -39,6 +41,9 @@ function App() {
           <Route index element={<MyOrders />} />
           <Route path="myprofile" element={<MyProfile />} />
           <Route path="addareview" element={<AddAReview />} />
+
+          <Route path="allorders" element={<AllOrders />} />
+          <Route path="users" element={<Users />} />
         </Route>
         <Route path="signup" element={<SignUp />} />
       </Routes>

@@ -19,7 +19,7 @@ const Tools = () => {
     <div>
       <h1 className=" text-center text-4xl font-bold my-5">Our Products</h1>
       <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-        {tools?.slice(0, 3)?.map((tool) => (
+        {tools?.slice(-3)?.map((tool) => (
           <Tool key={tool._id} tool={tool}></Tool>
         ))}
       </div>
