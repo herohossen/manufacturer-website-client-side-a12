@@ -11,6 +11,7 @@ const MyOrders = () => {
 
   useEffect(() => {
     if (user) {
+      //http://localhost:5000/order?email=delowar@mail.com
       fetch(`http://localhost:8888/order?email=${user.email}`, {
         method: "GET",
         headers: {
@@ -27,6 +28,7 @@ const MyOrders = () => {
           return res.json();
         })
         .then((data) => {
+          console.log(data);
           setOrders(data);
         });
     }
@@ -35,8 +37,8 @@ const MyOrders = () => {
   return (
     <div>
       <h2>My Orders: {orders.length}</h2>
-      <div class="overflow-x-auto">
-        <table class="table w-full">
+      <div className="overflow-x-auto">
+        <table className="table w-full">
           <thead>
             <tr>
               <th></th>
@@ -54,13 +56,16 @@ const MyOrders = () => {
                 <td>{a.price}</td>
                 <td>{a.orderQuantity}</td>
 
-                {/* <td>
-                  {a.price && !a.paid && (
+                <td>
+                  {/* {a.price && !a.paid && (
                     <Link to={`/dashboard/payment/${a._id}`}>
                       <button className="btn btn-xs btn-success">pay</button>
                     </Link>
-                  )}
-                  {a.price && a.paid && (
+                  )} */}
+
+                  {/* paid */}
+
+                  {/* {a.price && a.paid && (
                     <div>
                       <p>
                         <span className="text-success">Paid</span>
@@ -70,8 +75,8 @@ const MyOrders = () => {
                         <span className="text-success">{a.transactionId}</span>
                       </p>
                     </div>
-                  )}
-                </td> */}
+                  )} */}
+                </td>
               </tr>
             ))}
           </tbody>
