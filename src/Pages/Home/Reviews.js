@@ -9,8 +9,10 @@ const Reviews = () => {
     error,
     data: reviews,
     refetch,
-  } = useQuery('reviews', () =>
-    fetch(`http://localhost:8888/reviews`).then((res) => res.json())
+  } = useQuery("reviews", () =>
+    fetch(`https://tools-manufactuare.herokuapp.com/reviews`).then((res) =>
+      res.json()
+    )
   );
 
   if (isLoading) {

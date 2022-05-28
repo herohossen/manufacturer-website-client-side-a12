@@ -18,7 +18,9 @@ const Purchase = () => {
     data: tool,
     refetch,
   } = useQuery(["tool", toolId], () =>
-    fetch(`http://localhost:8888/tools/${toolId}`).then((res) => res.json())
+    fetch(`https://tools-manufactuare.herokuapp.com/tools/${toolId}`).then(
+      (res) => res.json()
+    )
   );
 
   useEffect(() => {
@@ -70,7 +72,7 @@ const Purchase = () => {
       orderQuantity,
     };
     console.log(order);
-    fetch("http://localhost:8888/order", {
+    fetch("https://tools-manufactuare.herokuapp.com/order", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

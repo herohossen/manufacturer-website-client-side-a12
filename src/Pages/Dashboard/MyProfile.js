@@ -14,8 +14,10 @@ const MyProfile = () => {
     error,
     data: info,
     refetch,
-  } = useQuery('info', () =>
-    fetch(`http://localhost:8888/userinfo`).then((res) => res.json())
+  } = useQuery("info", () =>
+    fetch(`https://tools-manufactuare.herokuapp.com/userinfo`).then((res) =>
+      res.json()
+    )
   );
 
   useEffect(() => {
@@ -47,26 +49,26 @@ const MyProfile = () => {
     console.log(updateUser);
 
     // setUserInfo(updateUser);
-    fetch('http://localhost:8888/userinfo', {
-      method: 'POST', // or 'PUT'
+    fetch("https://tools-manufactuare.herokuapp.com/userinfo", {
+      method: "POST", // or 'PUT'
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(updateUser),
     })
       .then((res) => res.json())
       .then((data) => {
-        console.log('Success:', data);
+        console.log("Success:", data);
         // refetch();
         if (data) {
-          toast.success('Your profile is update successfully');
+          toast.success("Your profile is update successfully");
         }
         // setUserInfo(data);
 
         e.target.reset();
       })
       .catch((error) => {
-        console.error('Error:', error);
+        console.error("Error:", error);
       });
   };
   return (

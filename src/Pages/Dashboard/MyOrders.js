@@ -12,12 +12,15 @@ const MyOrders = () => {
   useEffect(() => {
     if (user) {
       //http://localhost:5000/order?email=delowar@mail.com
-      fetch(`http://localhost:8888/order?email=${user.email}`, {
-        method: "GET",
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-        },
-      })
+      fetch(
+        `https://tools-manufactuare.herokuapp.com/order?email=${user.email}`,
+        {
+          method: "GET",
+          headers: {
+            authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+          },
+        }
+      )
         .then((res) => {
           console.log("res", res);
           if (res.status === 401 || res.status === 403) {

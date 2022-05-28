@@ -24,7 +24,7 @@ const UserReview = () => {
       email,
     };
     console.log(review);
-    fetch("http://localhost:8888/reviews", {
+    fetch("https://tools-manufactuare.herokuapp.com/reviews", {
       method: "POST", // or 'PUT'
       headers: {
         "Content-Type": "application/json",
