@@ -146,7 +146,7 @@ const Login = () => {
           </form>
           <p>
             <small>
-              New to Ztools{" "}
+              New to TataTools{" "}
               <Link className="text-primary" to="/signup">
                 Create New Account
               </Link>
